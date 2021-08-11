@@ -20,8 +20,8 @@ spec:
         - containerPort: 80
         command: ["/bin/sh", "-c"]
         args: 
-          - git clone https://github.com/m0ttai/ml-demo.git;
-            python /ml-demo/ml/animal_predict2.py;
+          - git clone https://github.com/m0ttai/ml-app.git;
+            python /ml-app/app/api/animal_predict_api.py;
         volumeMounts:
           - mountPath: /config
             name: config-volume

@@ -17,7 +17,7 @@ def return_predict():
 	# Variables
 	gcs_project_id = 'direct-plateau-322502'
 	gcs_key_path = '/config/direct-plateau-322502-d65283bd305e.json'
-	gcs_bucket_name = 'yu1-ml-demo'
+	gcs_bucket_name = 'ml-app-demo'
 	class_label = ('cat', 'crow', 'horse', 'lion', 'turtle')
 	model_path = '/model.h5'
 	model = tf.keras.models.load_model(model_path)
