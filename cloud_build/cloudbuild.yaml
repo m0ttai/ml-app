@@ -13,7 +13,9 @@ steps:
   args:
   - '-c'
   - |
-    sed "s/latest/${COMMIT_SHA}/g" cloud_build/deployment.yaml > cloud_build/apply.yaml
+    sed "s/latest/${COMMIT_SHA}/g" cloud_build/deployment.yaml | \
+    sed "s/GCPRJID/${_GC_PROJECT_ID}/g" | \
+    sed "s/GCSNAME/${_GCS_BUCKET_NAME}/g" > cloud_build/apply.yaml
 
 ### Deploy the new version of containers ###
 - name: "gcr.io/cloud-builders/gke-deploy"

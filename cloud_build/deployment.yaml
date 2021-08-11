@@ -30,6 +30,12 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
+        env:
+        - name: GC_PROJECT_ID
+          value: GCPRJID
+        env:
+        - name: GCS_BUCKET_NAME
+          value: GCSNAME
       volumes:
         - name: config-volume
           secret:

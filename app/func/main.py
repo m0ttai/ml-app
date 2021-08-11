@@ -3,7 +3,7 @@ import json
 
 def request_metadata(data, context):
 	# Variables
-	url = 'http://34.84.140.203:10080/'
+	url = 'http://35.187.223.154:10080/'
 	target = data['name']
 	payload = {"file_name": target}
 
