@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ml-app
+  template:
+    metadata:
+      labels:
+        app: ml-app
+    spec:
+      containers:
+      - name: ml-app
+        image: asia.gcr.io/direct-plateau-322502/ml-app:latest
+        ports:
+        - containerPort: 80
+        command: ["/bin/sh", "-c"]
+        args: 
+          - git clone https://github.com/m0ttai/ml-demo.git;
+            python /ml-demo/ml/animal_predict2.py;
+        volumeMounts:
+          - mountPath: /config
+            name: config-volume
+        env:
+        - name: POD_IP_ADDRESS
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+      volumes:
+        - name: config-volume
+          secret:
+            secretName: credential2
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ml-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: ml-app
+  ports:
+  - name: "http"
+    protocol: "TCP"
+    port: 10080
+    targetPort: 80

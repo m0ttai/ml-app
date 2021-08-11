@@ -1,0 +1,24 @@
+steps:
+### Build the container image ###
+- name: "gcr.io/cloud-builders/docker"
+  args: ["build", "-f", "Dockerfile", "-t", "asia.gcr.io/${PROJECT_ID}/ml-app:${COMMIT_SHA}", "."]
+
+### Push the container image to GCR ###
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "asia.gcr.io/$PROJECT_ID/ml-app:${COMMIT_SHA}"]
+
+### Replace the container image tag ###
+- name: "gcr.io/cloud-builders/gcloud"
+  entrypoint: /bin/bash
+  args:
+  - '-c'
+  - |
+    sed "s/latest/${COMMIT_SHA}/g" deployment.yaml > apply.yaml
+
+### Deploy the new version of containers ###
+- name: "gcr.io/cloud-builders/gke-deploy"
+  args:
+  - run
+  - --filename=apply.yaml
+  - --location=${_GKE_LOCATION}
+  - --cluster=${_GKE_CLUSTER_NAME}
