@@ -11,10 +11,10 @@ def request_metadata():
 	print(url)
 	payload = {"file_name": "cat.jpg"}
 
-	# Send request
+	### Send request ###
 	res = requests.post(url, json=json.dumps(payload))
 
-	# Logging
+	### Logging ###
 	print('Response Headers: ', res.headers)
 	print('Response Body: ', res.text)
 
