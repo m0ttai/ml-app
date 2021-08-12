@@ -1,7 +1,7 @@
 steps:
 ### Build the container image ###
 - name: "gcr.io/cloud-builders/docker"
-  args: ["build", "-f", "cloud_build/Dockerfile", "-t", "asia.gcr.io/${PROJECT_ID}/ml-app:${COMMIT_SHA}", "."]
+  args: ["build", "-f", "Dockerfile", "-t", "asia.gcr.io/${PROJECT_ID}/ml-app:${COMMIT_SHA}", "."]
 
 ### Push the container image to GCR ###
 - name: "gcr.io/cloud-builders/docker"
@@ -15,7 +15,8 @@ steps:
   - |
     sed "s/latest/${COMMIT_SHA}/g" cloud_build/deployment.yaml | \
     sed "s/GCPRJID/${_GC_PROJECT_ID}/g" | \
-    sed "s/GCSNAME/${_GCS_BUCKET_NAME}/g" > cloud_build/apply.yaml
+    sed "s/GCSNAME/${_GCS_BUCKET_NAME}/g" | \
+    sed "s/BRANCHNAME/${BRANCH_NAME}/g" > cloud_build/apply.yaml
 
 ### Deploy the new version of containers ###
 - name: "gcr.io/cloud-builders/gke-deploy"
