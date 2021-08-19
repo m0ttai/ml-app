@@ -45,7 +45,7 @@ def return_predict():
 	results = model.predict([X])[0]
 
 	### Set Object's Metadata ###
-	gcs_metadata = {'class': class_label[results.argmax()]}
+	gcs_metadata = {'animal': class_label[results.argmax()]}
 	predict_file.metadata = gcs_metadata
 	predict_file.patch()
 	return jsonify({"message": "{} is {}".format(predict_file.name, predict_file.metadata)})
