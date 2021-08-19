@@ -1,9 +1,11 @@
 import requests
-import json
+import json, os
 
 def request_metadata(data, context):
 	### Variables ###
-	url = 'http://35.187.223.154:10080/'
+	domain = os.environ['ML_APP_API_DOMAIN']
+	url = 'http://' + domain + ':10080/'
+	# url = 'http://35.187.223.154:10080/'
 	target = data['name']
 	payload = {"file_name": target}
 
