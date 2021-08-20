@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: ml-app
-        image: asia.gcr.io/GCPRJID/ml-app:latest
+        image: asia.gcr.io/GCPRJID/ml-app:VERSION
         ports:
         - containerPort: 80
         command: ["/bin/sh", "-c"]

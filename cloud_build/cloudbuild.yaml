@@ -7,13 +7,13 @@ steps:
 - name: "gcr.io/cloud-builders/docker"
   args: ["push", "asia.gcr.io/$PROJECT_ID/ml-app:${COMMIT_SHA}"]
 
-### Replace the container image tag ###
+### Replace variables ###
 - name: "gcr.io/cloud-builders/gcloud"
   entrypoint: /bin/bash
   args:
   - '-c'
   - |
-    sed "s/latest/${COMMIT_SHA}/g" cloud_build/deployment.yaml | \
+    sed "s/VERSION/${COMMIT_SHA}/g" cloud_build/deployment.yaml | \
     sed "s/GCPRJID/${_GC_PROJECT_ID}/g" | \
     sed "s/GCSNAME/${_GCS_BUCKET_NAME}/g" | \
     sed "s/BRANCHNAME/${BRANCH_NAME}/g" > cloud_build/apply.yaml
