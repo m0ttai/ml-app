@@ -19,7 +19,7 @@ gcs_client = gcs.Client(gcs_project_id, credentials=service_account.Credentials.
 gcs_bucket = gcs_client.get_bucket(gcs_bucket_name)
 model_path = '/model.h5'
 ml_model = gcs_bucket.blob('model.h5')
-ml_model.download_to_filename('model_path')
+ml_model.download_to_filename(model_path)
 
 @app.route('/', methods=['POST'])
 def return_predict():
