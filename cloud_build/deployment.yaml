@@ -20,11 +20,11 @@ spec:
             - containerPort: 80
           resources:
             requests:
-              cpu: 64Mi
-              memory: 250m
+              cpu: 64m
+              memory: 250Mi
             limits:
-              cpu: 128Mi
-              memory: 500m
+              cpu: 128m
+              memory: 500Mi
           command: ["/bin/sh", "-c"]
           args:
             - git clone -b BRANCHNAME https://github.com/m0ttai/ml-app.git;
