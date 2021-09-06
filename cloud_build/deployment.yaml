@@ -19,7 +19,7 @@ spec:
         ports:
         - containerPort: 80
         command: ["/bin/sh", "-c"]
-        args: 
+        args:
           - git clone -b BRANCHNAME https://github.com/m0ttai/ml-app.git;
             python /ml-app/app/api/animal_predict_api.py;
         volumeMounts:
