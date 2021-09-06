@@ -14,26 +14,33 @@ spec:
         app: ml-app
     spec:
       containers:
-      - name: ml-app
-        image: asia.gcr.io/GCPRJID/ml-app:VERSION
-        ports:
-        - containerPort: 80
-        command: ["/bin/sh", "-c"]
-        args:
-          - git clone -b BRANCHNAME https://github.com/m0ttai/ml-app.git;
-            python /ml-app/app/api/animal_predict_api.py;
-        volumeMounts:
-          - mountPath: /config
-            name: config-volume
-        env:
-        - name: POD_IP_ADDRESS
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
-        - name: GC_PROJECT_ID
-          value: GCPRJID
-        - name: GCS_BUCKET_NAME
-          value: GCSNAME
+        - name: ml-app
+          image: asia.gcr.io/GCPRJID/ml-app:VERSION
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 64Mi
+              memory: 250m
+            limits:
+              cpu: 128Mi
+              memory: 500m
+          command: ["/bin/sh", "-c"]
+          args:
+            - git clone -b BRANCHNAME https://github.com/m0ttai/ml-app.git;
+              python /ml-app/app/api/animal_predict_api.py;
+          volumeMounts:
+            - mountPath: /config
+              name: config-volume
+          env:
+            - name: POD_IP_ADDRESS
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: GC_PROJECT_ID
+              value: GCPRJID
+            - name: GCS_BUCKET_NAME
+              value: GCSNAME
       volumes:
         - name: config-volume
           secret:
@@ -49,7 +56,7 @@ spec:
   selector:
     app: ml-app
   ports:
-  - name: "http"
-    protocol: "TCP"
-    port: 10080
-    targetPort: 80
+    - name: "http"
+      protocol: "TCP"
+      port: 10080
+      targetPort: 80

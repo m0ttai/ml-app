@@ -17,14 +17,14 @@ gcs_key_path = '/config/gcs_key.json'
 gcs_bucket_name = os.environ['GCS_BUCKET_NAME']
 gcs_client = gcs.Client(gcs_project_id, credentials=service_account.Credentials.from_service_account_file(gcs_key_path))
 gcs_bucket = gcs_client.get_bucket(gcs_bucket_name)
+model_path = '/model.h5'
 ml_model = gcs_bucket.blob('model.h5')
-ml_model.download_to_filename('/model.h5')
+ml_model.download_to_filename('model_path')
 
 @app.route('/', methods=['POST'])
 def return_predict():
 	### Variables ###
 	class_label = ('cat', 'crow', 'horse', 'lion', 'turtle')
-	model_path = '/model.h5'
 	model = tf.keras.models.load_model(model_path)
 	X = []
 
